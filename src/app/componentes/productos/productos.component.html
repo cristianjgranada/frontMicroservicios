@@ -1,0 +1,160 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Productos</h1>
+
+    <div class="row">
+
+        <div class="col-lg-7">
+            <div class="p-1">
+                <div class="row mb-3">
+                    <div class="col-11">
+                <form ngNativeValidate [formGroup]="form" (ngSubmit)="registrarProducto()">
+
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control form-control-user"
+                                        
+                                        formControlName="productoid" placeholder="Id Producto" maxlength="20">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <input type="text" class="form-control form-control-user" formControlName="nombre"
+                                    placeholder="Nombre Producto" maxlength="50">
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control form-control-user" formControlName="precio"
+                                        placeholder="Precio">
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="number" class="form-control form-control-user"
+                                        formControlName="cantidad" placeholder="cantidad">
+                                </div>
+                            </div>
+
+                            <button class="btn btn-success btn-icon-split" type="submit">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                                <span class="text">Registrar</span>
+                            </button>
+
+                </form>
+            </div>
+            <div class="col-1 p-3">
+
+                <img class="img-profile rounded-circle " width="150" height="150" src={{imagen}}
+                    alt={{imagenDefault}}  data-toggle="modal" data-target="#logoutModal">
+            </div>
+<!--             <div class="form-group mb-3">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input form-control-user" id="customFile"
+                        formControlName="urlimagen">
+                    <label class="custom-file-label" for="customFile">Escoger archivo</label>
+                </div>
+            </div> -->
+
+        </div>
+            </div>
+        </div>
+    </div>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Productos registrados</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+
+                        <div class="col-sm-12 col-md-6 ml-1">
+                            <div id="dataTable_filter" class="dataTables_filter"><label>Buscar Producto Id
+                                <input #productoid
+                                        type="search" class="form-control form-control-sm" placeholder=""
+                                        aria-controls="dataTable" (change) = "filtrarProducto(productoid.value)" ></label></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+                                role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Name: activate to sort column descending" style="width: 69px;">
+                                            ProductoId</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Position: activate to sort column ascending"
+                                            style="width: 101px;">Nombre</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Office: activate to sort column ascending"
+                                            style="width: 56px;">Precio</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Age: activate to sort column ascending"
+                                            style="width: 31px;">Cantidad</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Start date: activate to sort column ascending"
+                                            style="width: 68px;">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" *ngFor="let producto of productos">
+                                        <td class="sorting_1">{{producto.productoid }} </td>
+                                        <td>{{producto.nombre }} </td>
+                                        <td>{{producto.precio }} </td>
+                                        <td> {{producto.cantidad}}</td>
+                                        <td>
+                                            <button class="btn btn-success btn-sm m-1"
+                                                (click)="verImagen(producto.urlimagen)"><i
+                                                    class="far fa-eye"></i> </button>
+                                            <button class="btn btn-warning btn-sm m-1"
+                                                (click)="actualizarProducto(producto)"><i class="fas fa-pencil-alt"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm m-1"
+                                                (click)="eliminarProducto(producto.productoid)"><i
+                                                    class="far fa-trash-alt"></i> </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+  <!--  Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Aactualizar Imagen</h5>
+
+        </div>
+        
+        <div class="modal-body">   
+            <img  class="img-profile rounded-circle " width="150" height="150" [src]="imgURL" *ngIf="imgURL"
+            alt="assets/no-img.jpg"  data-toggle="modal" data-target="#logoutModal">
+            <div class="form-group mb-3">
+                <div class="custom-file">
+                    <input  (change) = "preview(file.files)" #file type="file"  accept='image/*' class="custom-file-input form-control-user" id="customFile">
+                    <label class="custom-file-label" for="customFile">Escoger archivo</label>
+                </div>
+            </div>
+
+            
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary"(click) = "cancelarPreview()"  type="button" data-dismiss="modal">Cancelar</button>
+            <button class="btn btn-primary" (click) = "subirImagen()" [disabled] = "!imgURL" data-dismiss="modal">Actualizar Imagen</button>
+          </div>
+      </div>
+    </div>
+  </div>

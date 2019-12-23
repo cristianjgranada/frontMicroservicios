@@ -1,0 +1,266 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h3 class="h3 mb-1 text-gray-800">Registrar Factura</h3>
+    <div class="row mb-3">
+        <div class="col-11">
+            <form ngNativeValidate [formGroup]="formBuscarCliente" (ngSubmit)="buscarCliente()">
+                <div class="form-group row">
+                    <div class="col-sm-3 mb-3 mb-sm-0">
+                        <input type="text" class="form-control form-control-user" formControlName="clienteid"
+                            placeholder="Id Cliente" maxlength="20">
+                    </div>
+                    <div class="col-sm-3 mb-3 mb-sm-0">
+                        <select class="custom-select" formControlName="tipoclienteid" name="TipoIdentificacion"
+                            id="tipoIdentificacion" required>
+                            <option selected disabled value="">Escoja...</option>
+                            <option *ngFor="let tipocc of tiposIdentificacion">{{tipocc.tipo }} </option>
+                        </select>
+                        <div class="invalid-tooltip">
+                            Please select a valid state.
+                        </div>
+                    </div>
+                    <button class="btn btn-success btn-icon-split" type="submit">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        <span class="text">Buscar Cliente</span>
+                    </button>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control form-control-user" formControlName="nombre"
+                            placeholder="Nombre Cliente">
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control form-control-user" formControlName="apellido"
+                            placeholder="Apellido Cliente">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Registrar Productos</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row mt-2">
+                        <div class="row mb-3">
+                            <div class="col-11 ml-3">
+                                <form ngNativeValidate [formGroup]="formBuscarProductos" (ngSubmit)="buscarProducto()">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                            <input type="text" class="form-control form-control-user"
+                                                formControlName="productoid" placeholder="Id Producto" maxlength="20">
+                                        </div>
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                            <input type="number" class="form-control form-control-user"
+                                                formControlName="cantidad" placeholder="Cantidad" maxlength="20"
+                                                min="1">
+                                        </div>
+                                        <button class="btn btn-success btn-icon-split" type="submit">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <span class="text">Agregar Producto</span>
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+                                role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Name: activate to sort column descending" style="width: 69px;">
+                                            Producto</th>
+                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-sort="ascending"
+                                            aria-label="Name: activate to sort column descending" style="width: 36px;">
+                                            Cantidad</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Position: activate to sort column ascending"
+                                            style="width: 56px;">Valor Unitario</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Office: activate to sort column ascending"
+                                            style="width: 69px;">Valor Total</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Start date: activate to sort column ascending"
+                                            style="width: 20px;">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" *ngFor="let producto of productos">
+                                        <td class="sorting_1">{{producto.nombre }} </td>
+                                        <td>{{producto.cantidad }} </td>
+                                        <td>{{producto.precio }} </td>
+                                        <td>{{producto.cantidad * producto.precio }} </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm m-1"
+                                                (click)="eliminarProducto(producto.nombre)"><i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card border-left-success shadow h-100 py-2 mt-3">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total</div>
+                            <div class="h4 mb-0 font-weight-bold text-gray-800">$ {{total}}</div>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-danger btn-icon-split" (click)="pagar(mymodal)"
+                                [disabled]="productos.length<=0 ">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                </span>
+                                <span class="text h4">Pagar</span>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Factura de venta</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <table style="width: 100%;">
+
+            <tbody>
+                <tr  style="width: 33%;">
+                    <th style="width: 50%;">Empresa</th>
+                    <td style="width: 50%;">{{contenidoFactura.encabezado.empresa}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">NIT</th>
+                    <td style="width: 50%;">{{contenidoFactura.encabezado.NIT}}</td>
+                </tr>
+                <tr>
+                    <th  style="width: 50%;">Telefono</th>
+                    <td  style="width: 50%;">{{contenidoFactura.encabezado.telefono}}</td>
+                </tr>
+            </tbody>
+
+        </table>
+        <hr>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+
+                    <th style="width: 50%;">Resolucion DIAN</th>
+                    <td style="width: 50%;"> </td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">Fecha</th>
+                    <td style="width: 50%;">{{contenidoFactura.resolucionDIAN.fecha}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">Numero</th>
+                    <td style="width: 50%;">{{contenidoFactura.resolucionDIAN.numero}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">Prefijo</th>
+                    <td style="width: 50%;">{{contenidoFactura.resolucionDIAN.prefijo}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">Rango</th>
+                    <td style="width: 50%;">{{contenidoFactura.resolucionDIAN.rango}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <th style="width: 50%;">Fecha</th>
+                    <td style="width: 50%;">{{contenidoFactura.facturafecha}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">Factura N</th>
+                    <td style="width: 50%;">{{contenidoFactura.resolucionDIAN.prefijo}} {{contenidoFactura.consecutivo}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">Cliente</th>
+                    <td style="width: 50%;">{{contenidoFactura.clienteid}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">{{contenidoFactura.clientenombre}}</th>
+                    <td style="width: 50%;">{{contenidoFactura.clienteapellido}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <table class="table table-borderless table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Valor</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of contenidoFactura.producto">
+                    <td>{{item.nombre}} </td>
+                    <td>{{item.cantidad}}</td>
+                    <td>{{item.precio | number: '1.0-0'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <table class="table table-borderless table-sm">
+            <tbody>
+                <tr>
+                    <th style="width: 50%;">Valor Iva % {{contenidoFactura.iva}} </th>
+                    <td style="width: 50%;">{{iva | number: '1.0-0'  }}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">Valor Neto </th>
+                    <td style="width: 50%;">{{neto | number: '1.0-0'}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 50%;">Total</th>
+                    <td style="width: 50%;">{{total | number: '1.0-0'}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success btn-icon-split" (click)="modal.close('Save click')">
+            <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+            </span>
+            <span class="text">Ok</span>
+        </button>
+    </div>
+</ng-template>
