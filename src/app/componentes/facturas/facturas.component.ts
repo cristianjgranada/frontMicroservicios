@@ -128,6 +128,7 @@ export class FacturasComponent implements OnInit {
       this.facturasService.registrarFactura(this.contenidoFactura).subscribe((jsnRespuesta:any) => {
         if (jsnRespuesta && jsnRespuesta.codigo === 0){
           this.contenidoFactura  = jsnRespuesta.data
+          this.productos.length = 0
           this.formBuscarCliente.reset()
           this.formBuscarProductos.reset()
           this.openModal(content)

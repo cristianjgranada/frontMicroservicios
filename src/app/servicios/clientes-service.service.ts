@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http'
+import { environment } from '../../environments/environment'
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientesServiceService {
-  ip:string = "localhost"
-  puerto:number = 4007
+  ip:string = environment.IP // "192.168.99.100" //"localhost"
+  puerto:number =  environment.PORT  //  9007 //4007
   url: string = `http://${this.ip}:${this.puerto}/clientes/` 
   constructor(private http: HttpClient) { }
 
