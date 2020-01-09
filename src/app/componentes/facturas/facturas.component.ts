@@ -115,7 +115,7 @@ export class FacturasComponent implements OnInit {
     this.iva =  this.total - this.neto 
     let productosFacturados = JSON.parse( JSON.stringify( this.productos))
       this.contenidoFactura = {
-        "encabezado" :  { "empresa" : "Pragma", "NIT": "0000000-0", "telefono": "180023456" },
+        "encabezado" :  { "empresa" : "STOREAPP", "NIT": "0000000-0", "telefono": "180023456" },
         "resolucionDIAN" : { "fecha": "2019-12-18", "numero" : 12345, "prefijo": "pr" , "rango": "0 al 1000"  },
         "facturafecha" : moment().format('YYYY-MM-DD hh:mm:ss')  ,
         "clienteid": this.formBuscarCliente.get("clienteid").value,
@@ -129,6 +129,7 @@ export class FacturasComponent implements OnInit {
         if (jsnRespuesta && jsnRespuesta.codigo === 0){
           this.contenidoFactura  = jsnRespuesta.data
           this.productos.length = 0
+          this.total = 0
           this.formBuscarCliente.reset()
           this.formBuscarProductos.reset()
           this.openModal(content)
