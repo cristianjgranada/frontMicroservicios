@@ -129,10 +129,11 @@ export class FacturasComponent implements OnInit {
         if (jsnRespuesta && jsnRespuesta.codigo === 0){
           this.contenidoFactura  = jsnRespuesta.data
           this.productos.length = 0
-          this.total = 0
+          
           this.formBuscarCliente.reset()
           this.formBuscarProductos.reset()
           this.openModal(content)
+
         }else {
           console.log(jsnRespuesta);
         }
@@ -141,6 +142,7 @@ export class FacturasComponent implements OnInit {
 
   openModal(content){
     this.modalService.open(content, this.modalOptions).result.then((result) => {
+      this.total = 0
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

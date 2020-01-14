@@ -7,8 +7,8 @@ import { environment } from '../../environments/environment'
 })
 export class FacturasServiceService {
   ip:string = environment.IP // "192.168.99.100" //"localhost"
-  puerto:number =  environment.PORT //  9007 //4007
-  url: string = `http://${this.ip}:${this.puerto}/facturas/` 
+  //puerto:number =  environment.PORT //  9007 //4007
+  url: string = `http://${this.ip}/facturas/` 
   constructor(private http: HttpClient) { }
 
   registrarFactura(jsnFactura:any){
@@ -20,6 +20,6 @@ export class FacturasServiceService {
   }
 
   anularFactura(consecutivo){
-    return this.http.put( `http://${this.ip}:${this.puerto}/anularfactura` , {consecutivo} )
+    return this.http.put( `http://${this.ip}/anularfactura` , {consecutivo} )
   }
 }

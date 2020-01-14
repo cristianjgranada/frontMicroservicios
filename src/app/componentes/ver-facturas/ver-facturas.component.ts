@@ -30,7 +30,6 @@ export class VerFacturasComponent implements OnInit {
   closeResult: string;
   ngOnInit() {
     this.obtenerFacturas()
-    
   }
 
   obtenerFacturas(){

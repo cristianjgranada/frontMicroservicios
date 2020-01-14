@@ -7,8 +7,8 @@ import { environment } from '../../environments/environment'
 })
 export class ProductosServiceService {
   ip:string = environment.IP // "192.168.99.100" //"localhost"
-  puerto:number =  environment.PORT  //  9007 //4007
-  url: string = `http://${this.ip}:${this.puerto}/productos/` 
+  //puerto:number =  environment.PORT  //  9007 //4007
+  url: string = `http://${this.ip}/productos/` 
   constructor(private http: HttpClient ) { 
 
   }
